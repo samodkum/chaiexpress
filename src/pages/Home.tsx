@@ -59,9 +59,8 @@ const MenuCarousel = () => {
     { name: "PAAN CHAI", price: "60", image: "https://images.unsplash.com/photo-1544787210-2827448636b2?q=80&w=400" },
   ];
 
-  // Triple the items for infinite loop effect
   const extendedItems = [...items, ...items, ...items];
-  const [currentIndex, setCurrentIndex] = useState(items.length); // Start at the middle set
+  const [currentIndex, setCurrentIndex] = useState(items.length);
   const [isAnimating, setIsAnimating] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
@@ -80,7 +79,6 @@ const MenuCarousel = () => {
     setIsAnimating(true);
     setCurrentIndex(newIndex);
 
-    // Handle jump for infinite loop after animation
     setTimeout(() => {
       if (newIndex >= items.length * 2) {
         setCurrentIndex(newIndex - items.length);
@@ -91,60 +89,45 @@ const MenuCarousel = () => {
     }, 500);
   };
 
-  const nextSlide = () => handleIndexChange(currentIndex + 1);
-  const prevSlide = () => handleIndexChange(currentIndex - 1);
-
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-    if (isLeftSwipe) nextSlide();
-    if (isRightSwipe) prevSlide();
-    setTouchStart(null);
-    setTouchEnd(null);
+  const onDragEnd = (event: any, info: any) => {
+    const shift = info.offset.x + info.velocity.x * 0.1; // Predict destination based on velocity
+    const indexThreshold = totalWidth / 3;
+    
+    if (Math.abs(shift) > indexThreshold) {
+      const direction = shift > 0 ? -1 : 1;
+      const moveCount = Math.max(1, Math.floor(Math.abs(shift) / totalWidth));
+      handleIndexChange(currentIndex + (direction * moveCount));
+    }
   };
 
   return (
     <div className="relative w-full max-w-7xl mx-auto py-24">
-      <div 
-        className="relative flex justify-center items-center touch-pan-y"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
+      <div className="relative flex justify-center items-center overflow-hidden">
         {/* Navigation Buttons - Hidden on Mobile */}
         <button 
-          onClick={prevSlide}
+          onClick={() => handleIndexChange(currentIndex - 1)}
           className="hidden md:flex absolute left-4 md:left-10 z-50 bg-gold/10 hover:bg-gold text-gold hover:text-black p-5 rounded-full transition-all backdrop-blur-md border border-gold/30 shadow-2xl group"
         >
           <ChevronRight className="w-8 h-8 rotate-180 group-hover:scale-110 transition-transform" />
         </button>
 
         <button 
-          onClick={nextSlide}
+          onClick={() => handleIndexChange(currentIndex + 1)}
           className="hidden md:flex absolute right-4 md:right-10 z-50 bg-gold/10 hover:bg-gold text-gold hover:text-black p-5 rounded-full transition-all backdrop-blur-md border border-gold/30 shadow-2xl group"
         >
           <ChevronRight className="w-8 h-8 group-hover:scale-110 transition-transform" />
         </button>
 
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center py-10">
           <motion.div 
             className="flex cursor-grab active:cursor-grabbing"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.05}
+            onDragEnd={onDragEnd}
             style={{ gap: `${gap}px` }}
             animate={{ x: `calc(50% - ${itemWidth / 2}px - ${currentIndex * totalWidth}px)` }}
-            transition={isAnimating ? { type: "spring", stiffness: 200, damping: 25 } : { duration: 0 }}
+            transition={isAnimating ? { type: "spring", stiffness: 200, damping: 30, mass: 0.8 } : { duration: 0 }}
           >
             {extendedItems.map((item, i) => {
               const isCenter = i === currentIndex;
@@ -156,7 +139,7 @@ const MenuCarousel = () => {
                     zIndex: 60 
                   }}
                   className={cn(
-                    "relative shrink-0 rounded-[40px] md:rounded-[50px] pt-20 md:pt-28 pb-10 md:pb-14 px-6 md:px-10 transition-all duration-700 cursor-pointer",
+                    "relative shrink-0 rounded-[40px] md:rounded-[50px] pt-20 md:pt-28 pb-10 md:pb-14 px-6 md:px-10 transition-all duration-700 cursor-pointer select-none",
                     isCenter 
                       ? "bg-gold text-black scale-105 md:scale-110 z-40 shadow-[0_20px_40px_rgba(201,168,76,0.3)] md:shadow-[0_40px_80px_rgba(201,168,76,0.4)] ring-4 ring-gold/20" 
                       : "bg-bg-card text-white border border-white/10 opacity-30 scale-90 blur-[1px]"
@@ -175,6 +158,7 @@ const MenuCarousel = () => {
                         "w-full h-full object-cover rounded-full border-[4px] md:border-[6px]",
                         isCenter ? "border-white" : "border-gold/30"
                       )}
+                      draggable={false}
                       referrerPolicy="no-referrer"
                     />
                     {isCenter && (
@@ -248,24 +232,42 @@ const ChaiAnimation = () => {
   const totalFrames = 136;
   const frameRef = useRef(1);
   const imagesRef = useRef<HTMLImageElement[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const [loadingState, setLoadingState] = useState<'initial' | 'partial' | 'complete'>('initial');
 
   useEffect(() => {
     let loadedCount = 0;
-    // Preload all frames for maximum smoothness
-    for (let i = 1; i <= totalFrames; i++) {
+    const framesToLoad = Array.from({ length: totalFrames }, (_, i) => i + 1);
+    
+    // Prioritize frame 1 for instant visibility
+    const loadFrame = (i: number) => {
       const img = new Image();
       img.src = `/frames/ezgif-frame-${i.toString().padStart(3, '0')}.png`;
       img.onload = () => {
+        imagesRef.current[i] = img;
         loadedCount++;
-        if (loadedCount === totalFrames) setLoaded(true);
+        
+        if (i === 1) setLoadingState('partial');
+        if (loadedCount === totalFrames) setLoadingState('complete');
+        
+        // Render first frame immediately once ready
+        if (i === 1 && canvasRef.current) {
+          const ctx = canvasRef.current.getContext('2d');
+          if (ctx) ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height);
+        }
       };
-      imagesRef.current[i] = img;
-    }
+    };
+
+    // Load first frame immediately
+    loadFrame(1);
+    
+    // Load the rest in chunks to not block the main thread
+    setTimeout(() => {
+      framesToLoad.slice(1).forEach(i => loadFrame(i));
+    }, 100);
   }, []);
 
   useEffect(() => {
-    if (!loaded) return;
+    if (loadingState === 'initial') return;
 
     let animationFrameId: number;
     let lastTime = performance.now();
@@ -282,23 +284,26 @@ const ChaiAnimation = () => {
             const img = imagesRef.current[frameRef.current];
             if (img && img.complete) {
               ctx.clearRect(0, 0, canvas.width, canvas.height);
-              // Show more of the portrait frame (1080x1550) to ensure full Kulhad is visible
-              const sw = img.width; // 1080
-              const sh = 1550; // Increased to show more vertical space
-              const sx = 0;
-              const sy = (img.height - sh) / 2 + 50; // Shifted down 50px to show the base
               
-              // Draw to square canvas with padding
+              // Maintain the final uncropped/stable sizing from previous refinements
+              const sw = img.width; 
+              const sh = 1550; 
+              const sx = 0;
+              const sy = (img.height - sh) / 2 + 50; 
+              
               const padding = canvas.width * 0.05;
               const dSize = canvas.width - (padding * 2);
-              
-              // Maintain aspect ratio: fit portrait into square canvas
               const aspect = sw / sh;
               const dWidth = dSize * aspect;
               const dx = (canvas.width - dWidth) / 2;
               
               ctx.drawImage(img, sx, sy, sw, sh, dx, padding, dWidth, dSize);
-              frameRef.current = (frameRef.current % totalFrames) + 1;
+              
+              // Only advance frame if next frame is ready or we are repeating the last ready frame
+              const nextFrame = (frameRef.current % totalFrames) + 1;
+              if (imagesRef.current[nextFrame] && imagesRef.current[nextFrame].complete) {
+                frameRef.current = nextFrame;
+              }
               lastTime = time - (delta % interval);
             }
           }
@@ -309,7 +314,7 @@ const ChaiAnimation = () => {
 
     animationFrameId = requestAnimationFrame(render);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [loaded]);
+  }, [loadingState]);
 
   return (
     <div className="relative w-full aspect-square flex items-center justify-center z-10 transition-all duration-500">
@@ -321,7 +326,7 @@ const ChaiAnimation = () => {
           className="w-full h-full object-contain mix-blend-screen"
         />
       </div>
-      {!loaded && (
+      {loadingState === 'initial' && (
         <div className="absolute inset-0 flex items-center justify-center text-gold/30 text-[10px] font-bold tracking-[0.5em] animate-pulse uppercase">
           Brewing...
         </div>
