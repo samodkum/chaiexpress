@@ -40,18 +40,6 @@ h1, h2, h3, .font-serif {
   background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold), var(--color-gold-dark));
 }
 
-.text-gold {
-  color: var(--gold);
-}
-
-.bg-gold {
-  background-color: var(--gold);
-}
-
-.border-gold {
-  border-color: var(--gold);
-}
-
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
