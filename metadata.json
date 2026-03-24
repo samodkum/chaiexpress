@@ -1,0 +1,5 @@
+{
+  "name": "Chai Xpress Cafe",
+  "description": "India's Premium Chai Experience. Authentic Flavors, Modern Café Culture, and Digital Excellence.",
+  "requestFramePermissions": ["geolocation"]
+}

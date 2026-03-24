@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap');
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Syne", ui-serif, Georgia, serif;
+
+  --color-gold: #C9A84C;
+  --color-gold-light: #E8C76A;
+  --color-gold-dark: #A07830;
+  
+  --color-bg-dark: #0D0D0D;
+  --color-section-dark: #141414;
+  --color-card-dark: #1E1E1E;
+  --color-border-dark: #2A2A2A;
+}
+
+:root {
+  --bg-page: var(--color-bg-dark);
+  --bg-section: var(--color-section-dark);
+  --bg-card: var(--color-card-dark);
+  --text-primary: #F5F5F0;
+  --text-muted: #888888;
+  --border-color: var(--color-border-dark);
+  --gold: var(--color-gold);
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .font-serif {
+  font-family: var(--font-serif);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold), var(--color-gold-dark));
+}
+
+.text-gold {
+  color: var(--gold);
+}
+
+.bg-gold {
+  background-color: var(--gold);
+}
+
+.border-gold {
+  border-color: var(--gold);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-light);
+}
+
+/* Animations */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee-fast {
+  animation: marquee 15s linear infinite;
+}
+
+.animate-marquee-fast:hover {
+  animation-play-state: paused;
+}
