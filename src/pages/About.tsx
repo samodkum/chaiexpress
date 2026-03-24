@@ -15,7 +15,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
           setHasAnimated(true);
           let start = 0;
           const end = value;
-          const duration = 2000;
+          const duration = 800;
           const increment = end / (duration / 16);
           
           const timer = setInterval(() => {

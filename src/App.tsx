@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import DownloadMenuButton from './components/DownloadMenuButton';
 import Home from './pages/Home';
 import About from './pages/About';
 import Menu from './pages/Menu';
@@ -36,7 +35,6 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
-        <DownloadMenuButton />
         <Footer />
       </div>
     </Router>

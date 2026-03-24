@@ -3,6 +3,8 @@ import { motion } from 'motion/react';
 import { MENU_DATA } from '../constants';
 import { Leaf } from 'lucide-react';
 
+import DownloadMenuButton from '../components/DownloadMenuButton';
+
 export default function Menu() {
   // Consolidate all menu items into a single array
   const allMenuItems = Object.entries(MENU_DATA).flatMap(([category, items]) => 
@@ -11,6 +13,9 @@ export default function Menu() {
 
   return (
     <div className="pt-24 pb-20">
+      <div className="md:hidden">
+        <DownloadMenuButton />
+      </div>
       {/* Hero Banner */}
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-black/70 z-10" />

@@ -16,7 +16,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
           setHasAnimated(true);
           let start = 0;
           const end = value;
-          const duration = 2000;
+          const duration = 800;
           const increment = end / (duration / 16);
           
           const timer = setInterval(() => {
@@ -90,19 +90,21 @@ const MenuCarousel = () => {
   };
 
   const onDragEnd = (event: any, info: any) => {
-    const shift = info.offset.x + info.velocity.x * 0.1; // Predict destination based on velocity
-    const indexThreshold = totalWidth / 3;
+    // Only allow single-dish swipes on mobile/tablet (windowWidth < 1024)
+    const isMobile = windowWidth < 1024;
+    const shift = info.offset.x + info.velocity.x * 0.1;
+    const indexThreshold = totalWidth / 4; // More sensitive threshold (25% of width)
     
     if (Math.abs(shift) > indexThreshold) {
       const direction = shift > 0 ? -1 : 1;
-      const moveCount = Math.max(1, Math.floor(Math.abs(shift) / totalWidth));
+      const moveCount = isMobile ? 1 : Math.max(1, Math.floor(Math.abs(shift) / totalWidth));
       handleIndexChange(currentIndex + (direction * moveCount));
     }
   };
 
   return (
     <div className="relative w-full max-w-7xl mx-auto py-24">
-      <div className="relative flex justify-center items-center overflow-hidden">
+      <div className="relative flex justify-center items-center px-4">
         {/* Navigation Buttons - Hidden on Mobile */}
         <button 
           onClick={() => handleIndexChange(currentIndex - 1)}
@@ -118,7 +120,7 @@ const MenuCarousel = () => {
           <ChevronRight className="w-8 h-8 group-hover:scale-110 transition-transform" />
         </button>
 
-        <div className="w-full flex justify-center py-10">
+        <div className="w-full flex justify-center py-24">
           <motion.div 
             className="flex cursor-grab active:cursor-grabbing"
             drag="x"
