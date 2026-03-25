@@ -86,11 +86,11 @@ export default function Franchise() {
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div className="space-y-8">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold leading-tight">
-              Ready to Start Your <span className="text-gold">Entrepreneurial</span> Journey?
+            <h2 className="text-4xl md:text-5xl font-serif font-bold leading-tight uppercase">
+              Own a Chai <span className="text-gold">Express</span> Cafe
             </h2>
-            <p className="text-text-muted text-lg">
-              Fill out the form and our franchise development team will get in touch with you shortly.
+            <p className="text-gold font-bold text-xl md:text-2xl italic">
+              Sapno ko business me badalne ka time aagya hai
             </p>
             <div className="aspect-video rounded-2xl overflow-hidden grayscale opacity-50">
               <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800" alt="Office" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -103,6 +103,9 @@ export default function Franchise() {
             viewport={{ once: true }}
             className="bg-bg-card p-10 rounded-3xl border border-white/5 shadow-2xl"
           >
+            <p className="text-text-muted text-sm mb-8 font-medium border-l-2 border-gold pl-4">
+              Fill out the form and our franchise development team will get in touch with you shortly.
+            </p>
             <form className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
