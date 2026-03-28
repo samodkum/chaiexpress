@@ -132,7 +132,10 @@ const MenuCarousel = () => {
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={windowWidth < 1024 ? 0.1 : 0.05} // More elastic on mobile for fluid feel
             onDragEnd={onDragEnd}
-            style={{ gap: `${gap}px` }}
+            style={{ 
+              gap: `${gap}px`,
+              willChange: "transform" // Hardware acceleration for smoother swiping
+            }}
             animate={{ x: `calc(50% - ${itemWidth / 2}px - ${currentIndex * totalWidth}px)` }}
             transition={isAnimating ? (
               windowWidth < 1024 
@@ -142,25 +145,31 @@ const MenuCarousel = () => {
           >
             {extendedItems.map((item, i) => {
               const isCenter = i === currentIndex;
+              const isMobile = windowWidth < 1024;
+              
               return (
                 <motion.div
                   key={i}
-                  whileHover={{ 
-                    scale: isCenter ? 1.15 : 1.05,
-                    zIndex: 60 
-                  }}
+                  {...(!isMobile && {
+                    whileHover: { scale: isCenter ? 1.15 : 1.05, zIndex: 60 }
+                  })}
                   className={cn(
                     "relative shrink-0 rounded-[40px] md:rounded-[50px] pt-20 md:pt-28 pb-10 md:pb-14 px-6 md:px-10 transition-all duration-700 cursor-pointer select-none",
                     isCenter 
-                      ? "bg-gold text-black scale-105 md:scale-110 z-40 shadow-[0_20px_40px_rgba(201,168,76,0.3)] md:shadow-[0_40px_80px_rgba(201,168,76,0.4)] ring-4 ring-gold/20" 
-                      : "bg-bg-card text-white border border-white/10 opacity-30 scale-90 blur-[1px]"
+                      ? "bg-gold text-black scale-105 md:scale-110 z-40 ring-4 ring-gold/20" 
+                      : "bg-bg-card text-white border border-white/10 opacity-30 scale-90",
+                    isCenter && !isMobile && "shadow-[0_20px_40px_rgba(201,168,76,0.3)] md:shadow-[0_40px_80px_rgba(201,168,76,0.4)]",
+                    isCenter && isMobile && "shadow-xl", // Simpler shadow on mobile
+                    !isCenter && !isMobile && "blur-[1px]" // Disable blur on mobile
                   )}
                   style={{ width: `${itemWidth}px` }}
                 >
                   {/* Product Image */}
                   <div className={cn(
                     "absolute -top-12 md:-top-20 left-1/2 -translate-x-1/2 w-32 h-32 md:w-44 md:h-44 z-50 transition-all duration-700",
-                    isCenter ? "scale-110 drop-shadow-[0_15px_25px_rgba(0,0,0,0.4)] md:drop-shadow-[0_25px_35px_rgba(0,0,0,0.5)]" : "scale-90 opacity-80"
+                    isCenter ? "scale-110" : "scale-90 opacity-80",
+                    isCenter && !isMobile && "drop-shadow-[0_15px_25px_rgba(0,0,0,0.4)] md:drop-shadow-[0_25px_35px_rgba(0,0,0,0.5)]",
+                    isCenter && isMobile && "shadow-2xl" // Use simple shadow instead of drop-shadow on mobile
                   )}>
                     <img 
                       src={item.image} 
@@ -176,7 +185,10 @@ const MenuCarousel = () => {
                       <motion.div 
                         animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
                         transition={{ duration: 2, repeat: Infinity }}
-                        className="absolute inset-0 rounded-full bg-gold/20 -z-10 blur-xl"
+                        className={cn(
+                          "absolute inset-0 rounded-full bg-gold/20 -z-10",
+                          !isMobile && "blur-xl" // Disable blur-xl on mobile
+                        )}
                       />
                     )}
                   </div>
