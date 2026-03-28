@@ -361,34 +361,6 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="space-y-8 relative"
           >
-            {/* Background Bridge Sketch */}
-            <div className="absolute -top-20 -left-10 w-[120%] h-[150%] pointer-events-none -z-10 opacity-10 mix-blend-screen hidden lg:block">
-              <img src="/assets/kolkata_bridge_gold_sketch.png" alt="" className="w-full h-full object-contain" />
-            </div>
-
-            {/* Floating Spices */}
-            <div className="absolute inset-0 pointer-events-none -z-5">
-              <motion.img 
-                src="/assets/floating_chai_spices.png" 
-                alt="" 
-                className="absolute top-0 right-10 w-16 opacity-40 blur-[1px]"
-                animate={{ 
-                  y: [0, -15, 0],
-                  rotate: [0, 5, 0]
-                }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.img 
-                src="/assets/floating_chai_spices.png" 
-                alt="" 
-                className="absolute -bottom-10 left-0 w-20 opacity-30 blur-[2px]"
-                animate={{ 
-                  y: [0, 20, 0],
-                  rotate: [0, -8, 0]
-                }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              />
-            </div>
 
             <div className="space-y-2">
               <p className="text-gold font-bold tracking-[0.3em] text-[10px] md:text-xs uppercase text-center lg:text-left">CHAI XPRESS SIGNATURE</p>
