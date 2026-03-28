@@ -359,11 +359,40 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-8 relative"
           >
+            {/* Background Bridge Sketch */}
+            <div className="absolute -top-20 -left-10 w-[120%] h-[150%] pointer-events-none -z-10 opacity-10 mix-blend-screen hidden lg:block">
+              <img src="/assets/kolkata_bridge_gold_sketch.png" alt="" className="w-full h-full object-contain" />
+            </div>
+
+            {/* Floating Spices */}
+            <div className="absolute inset-0 pointer-events-none -z-5">
+              <motion.img 
+                src="/assets/floating_chai_spices.png" 
+                alt="" 
+                className="absolute top-0 right-10 w-16 opacity-40 blur-[1px]"
+                animate={{ 
+                  y: [0, -15, 0],
+                  rotate: [0, 5, 0]
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.img 
+                src="/assets/floating_chai_spices.png" 
+                alt="" 
+                className="absolute -bottom-10 left-0 w-20 opacity-30 blur-[2px]"
+                animate={{ 
+                  y: [0, 20, 0],
+                  rotate: [0, -8, 0]
+                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              />
+            </div>
+
             <div className="space-y-2">
               <p className="text-gold font-bold tracking-[0.3em] text-[10px] md:text-xs uppercase text-center lg:text-left">CHAI XPRESS SIGNATURE</p>
-              <h1 className="text-4xl sm:text-6xl md:text-8xl font-serif font-bold leading-tight text-center lg:text-left">
+              <h1 className="text-4xl sm:text-6xl md:text-8xl font-serif font-bold leading-tight text-center lg:text-left relative">
                 <span className="italic font-normal block text-white">Taste The</span>
                 <span className="text-gold">GOODNESS</span>
               </h1>
@@ -388,9 +417,11 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="relative hidden lg:block"
+            className="relative block" // Visible on all screens
           >
-            <ChaiAnimation />
+            <div className="lg:mt-0 mt-20"> {/* Add margin on mobile to separate from text */}
+              <ChaiAnimation />
+            </div>
           </motion.div>
         </div>
 
@@ -433,14 +464,18 @@ export default function Home() {
             </h2>
             <div className="w-12 h-1 bg-gold mx-auto lg:mx-0" />
             <p className="text-text-muted leading-relaxed text-sm md:text-base">
-              Our journey started with a simple vision: to bring the authentic taste of Indian street chai to a modern, premium setting. We believe that chai is more than just a drink; it's a culture, a conversation, and a moment of peace in a busy world.
+              Chai Xpress Café is not just another tea brand in a crowded market—it is a heartfelt experience built on values, warmth, and authenticity. While many cafés focus solely on products, we focus on people. What truly sets us apart is our belief that every customer who walks through our doors is not just a guest, but a part of our extended family.
             </p>
             <p className="text-text-muted leading-relaxed text-sm md:text-base">
-              Every cup we serve is brewed with hand-picked tea leaves, fresh spices, and a whole lot of love. Our signature Kulhad Chai is a tribute to the roots of Indian tea culture.
+              At Chai Xpress Café, quality is not a promise—it is a principle we live by. Every cup we serve reflects the same standards we would choose for ourselves. We use natural ingredients, enriched with grounded Ayurvedic elements, ensuring that every sip is not only flavorful but also nourishing.
             </p>
-            <Link to="/about" className="inline-flex items-center gap-2 text-gold font-bold hover:gap-4 transition-all text-sm">
-              OUR STORY <ArrowRight className="w-5 h-5" />
-            </Link>
+            
+            <div className="pt-6 flex flex-wrap justify-center lg:justify-start gap-4">
+              <Link to="/about" className="inline-flex items-center gap-2 bg-gold text-black px-8 py-3 rounded-full font-bold hover:bg-gold-light transition-all text-sm group">
+                READ FULL STORY 
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>

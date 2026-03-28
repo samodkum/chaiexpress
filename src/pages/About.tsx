@@ -60,9 +60,45 @@ export default function About() {
           <p className="text-gold tracking-[0.3em] uppercase text-sm font-bold">Home {'>'} About Us</p>
         </div>
       </section>
+      {/* Our Philosophy Section */}
+      <section className="bg-bg-page py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <h2 className="text-4xl md:text-5xl font-serif font-bold uppercase tracking-tight">
+              Our <span className="text-gold">Philosophy</span>
+            </h2>
+            <div className="w-16 h-1 bg-gold" />
+            <div className="space-y-6 text-text-muted leading-relaxed text-lg">
+              <p>
+                Chai Xpress Café is not just another tea brand in a crowded market—it is a heartfelt experience built on values, warmth, and authenticity. While many cafés focus solely on products, we focus on people. What truly sets us apart is our belief that every customer who walks through our doors is not just a guest, but a part of our extended family.
+              </p>
+              <p>
+                At Chai Xpress Café, quality is not a promise—it is a principle we live by. Every cup we serve reflects the same standards we would choose for ourselves. We use natural ingredients, enriched with grounded Ayurvedic elements, ensuring that every sip is not only flavorful but also nourishing. Our menu is thoughtfully curated, offering a wide variety of teas, including several blends that promote wellness and support a healthy lifestyle.
+              </p>
+              <p>
+                With over 100 items on our menu, we ensure there is something for everyone—without compromising affordability. Keeping inclusivity at our core, we have designed our pricing so that every individual can enjoy a premium café experience within a budget of ₹200.
+              </p>
+              <p>
+                Understanding the evolving culture of café conversations, we have created a space where people from all walks of life can come together, connect, and unwind. Our inviting ambience, attentive service, and accessible pricing are all aligned with one simple vision—to make everyone feel comfortable, valued, and happy.
+              </p>
+              <p>
+                Our shakes, made from natural powder-based ingredients, further reflect our commitment to health-conscious innovation.
+              </p>
+              <p>
+                At Chai Xpress Café, we are not just serving beverages—we are spreading love, building connections, and creating a community. For us, business is just a name; what we truly build are relationships that last beyond the cup.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Founder's Story */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
+      <section className="max-w-7xl mx-auto px-6 py-24 border-t border-white/5">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -80,7 +116,7 @@ export default function About() {
             </div>
             <div className="absolute -bottom-6 -right-6 bg-gold p-8 rounded-2xl shadow-2xl max-w-[250px]">
               <h3 className="text-black font-bold text-xl">Shivang Pandey</h3>
-              <p className="text-black/70 text-sm font-medium">Founder, Chai Xpress</p>
+              <p className="text-black/70 text-sm font-medium">Founder</p>
             </div>
           </motion.div>
 
@@ -93,13 +129,68 @@ export default function About() {
             <Quote className="w-12 h-12 text-gold opacity-50" />
             <div className="space-y-6 text-text-muted leading-relaxed text-lg italic">
               <p>
-                "My story starts from a simple young man and goes to the owner of Chai Xpress Cafe. I studied B.Com from Allahabad University, after that I was not able to understand what to do. I had never entered the kitchen of my house to cook or make anything — one day I just offered a pot to make tea and perhaps the same thought clicked in me to get into the tea business."
+                "From a humble roadside stall to a thriving chain of 50 outlets, Chai Xpress Café is not just a business—it is a story of resilience, vision, and relentless determination."
               </p>
               <p>
-                "In 2018, the first stall was opened in Prayagraj. From January to July only 4 stalls were opened in Allahabad. I wanted to further advance my business — following this I opened a Chai Xpress Cafe outlet in Lucknow and kept variety of tea and snacks there."
+                Born without the support of family or friends, Shivang Pandey carried nothing but a dream and an unshakable belief in himself. An orphan by circumstance, but a warrior by mindset, he chose to build his own destiny from the ground up. What began as a small tea stall outside his college during his B.Com days slowly turned into a symbol of ambition.
               </p>
               <p>
-                "My journey is an example for many young people that even a simple student can become a business owner. The journey does not end here; Chai Xpress has just started running. The journey is just beginning........"
+                Every cup of tea carried his struggle. Every setback—betrayal, criticism, and hardship—became fuel to push forward. Like Arjun, whose focus never wavered from the eye of the fish, Shivang’s vision remained fixed on creating something of his own.
+              </p>
+              <p>
+                With his own earnings, he pursued an MBA, not as an escape, but as a tool to sharpen his entrepreneurial journey. He reinvested every ounce of knowledge and effort back into his dream.
+              </p>
+              <p>
+                Today, Chai Xpress Café stands strong across multiple states—a brand born not from privilege, but from passion, pain, and persistence.
+              </p>
+              <p className="font-bold not-italic text-white">
+                This is not just success.<br />
+                This is courage brewed into reality.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Vinayak Maurya's Story */}
+      <section className="max-w-7xl mx-auto px-6 py-24 border-t border-white/5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="order-1 lg:order-2 relative"
+          >
+            <div className="aspect-[3/4] rounded-2xl overflow-hidden border-4 border-gold p-4">
+              <img 
+                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800" 
+                alt="Director Vinayak Maurya"
+                className="w-full h-full object-cover rounded-xl"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="absolute -bottom-6 -left-6 bg-gold p-8 rounded-2xl shadow-2xl max-w-[250px]">
+              <h3 className="text-black font-bold text-xl">Vinayak Maurya</h3>
+              <p className="text-black/70 text-sm font-medium">Operations & People Management Director</p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="order-2 lg:order-1 space-y-8"
+          >
+            <Quote className="w-12 h-12 text-gold opacity-50" />
+            <div className="space-y-6 text-text-muted leading-relaxed text-lg italic">
+              <p>
+                Vinayak Maurya is the embodiment of relentless ambition—beginning his journey in a small village near Bansa, earning from childhood through jobs and even facilitating Aadhaar registrations.
+              </p>
+              <p>
+                Driven by purpose, he moved to Lucknow with dreams larger than his circumstances, starting as a waiter and billing assistant at ₹6000. Fate aligned when he met Shivang Pandey at Chai Xpress Café—two parallel struggles, one shared vision.
+              </p>
+              <p>
+                Recognizing his grit, Shivang embraced him like a brother and elevated him to leadership. Today, Vinayak Maurya stands as Operations & People Management Director, inspiring youth that nothing is impossible.
               </p>
             </div>
           </motion.div>
@@ -226,8 +317,8 @@ export default function About() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
           {[
-            { name: "Shivang Pandey", role: "Founder & Visionary", img: "https://res.cloudinary.com/dzc1dckta/image/upload/v1774344644/Screenshot_2026-03-24_151028_pdcu49.png" },
-            { name: "Vinayak Maurya", role: "Co-Founder & Operations", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800" }
+            { name: "Shivang Pandey", role: "Founder", img: "https://res.cloudinary.com/dzc1dckta/image/upload/v1774344644/Screenshot_2026-03-24_151028_pdcu49.png" },
+            { name: "Vinayak Maurya", role: "Operations & People Management Director", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800" }
           ].map((member, i) => (
             <motion.div
               key={i}
