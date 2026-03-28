@@ -92,11 +92,16 @@ const MenuCarousel = () => {
   const onDragEnd = (event: any, info: any) => {
     // Only allow single-dish swipes on mobile/tablet (windowWidth < 1024)
     const isMobile = windowWidth < 1024;
-    const shift = info.offset.x + info.velocity.x * 0.1;
-    const indexThreshold = totalWidth / 4; // More sensitive threshold (25% of width)
+    // Reduce velocity influence on mobile for more controlled swiping
+    const velocityFactor = isMobile ? 0.05 : 0.1;
+    const shift = info.offset.x + info.velocity.x * velocityFactor;
+    
+    // Adjusted threshold for snappier response
+    const indexThreshold = isMobile ? totalWidth / 6 : totalWidth / 4;
     
     if (Math.abs(shift) > indexThreshold) {
       const direction = shift > 0 ? -1 : 1;
+      // Strictly one-by-one on mobile as requested
       const moveCount = isMobile ? 1 : Math.max(1, Math.floor(Math.abs(shift) / totalWidth));
       handleIndexChange(currentIndex + (direction * moveCount));
     }
@@ -125,11 +130,15 @@ const MenuCarousel = () => {
             className="flex cursor-grab active:cursor-grabbing"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.05}
+            dragElastic={windowWidth < 1024 ? 0.1 : 0.05} // More elastic on mobile for fluid feel
             onDragEnd={onDragEnd}
             style={{ gap: `${gap}px` }}
             animate={{ x: `calc(50% - ${itemWidth / 2}px - ${currentIndex * totalWidth}px)` }}
-            transition={isAnimating ? { type: "spring", stiffness: 200, damping: 30, mass: 0.8 } : { duration: 0 }}
+            transition={isAnimating ? (
+              windowWidth < 1024 
+                ? { type: "spring", stiffness: 300, damping: 35, mass: 0.5 } // Faster, tighter snap on mobile
+                : { type: "spring", stiffness: 200, damping: 30, mass: 0.8 }
+            ) : { duration: 0 }}
           >
             {extendedItems.map((item, i) => {
               const isCenter = i === currentIndex;
