@@ -347,7 +347,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
+      <section className="relative min-h-screen lg:h-screen lg:min-h-[700px] flex items-center overflow-hidden pt-32 pb-16 lg:pt-0 lg:pb-0">
         <div className="absolute inset-0 bg-black/60 z-10" />
         <div 
           className="absolute inset-0 bg-cover bg-center"
@@ -364,7 +364,7 @@ export default function Home() {
 
             <div className="space-y-2">
               <p className="text-gold font-bold tracking-[0.3em] text-[10px] md:text-xs uppercase text-center lg:text-left">CHAI XPRESS SIGNATURE</p>
-              <h1 className="text-4xl sm:text-6xl md:text-8xl font-serif font-bold leading-tight text-center lg:text-left relative">
+              <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-bold leading-tight text-center lg:text-left relative">
                 <span className="italic font-normal block text-white">Taste The</span>
                 <span className="text-gold">GOODNESS</span>
               </h1>
@@ -389,9 +389,9 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="relative block" // Visible on all screens
+            className="relative block mix-blend-screen max-w-[85vw] lg:max-w-none mx-auto"
           >
-            <div className="lg:mt-0 mt-20"> {/* Add margin on mobile to separate from text */}
+            <div className="lg:mt-0 mt-12">
               <ChaiAnimation />
             </div>
           </motion.div>
